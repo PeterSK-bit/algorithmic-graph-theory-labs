@@ -5,3 +5,6 @@ class Edge:
         self.u = u
         self.v = v
         self.weight = weight
+    
+    def is_incident_to_vertex(self, vertex: Vertex) -> bool:
+        return self.u == vertex or self.v == vertex

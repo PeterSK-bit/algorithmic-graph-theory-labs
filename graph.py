@@ -27,6 +27,25 @@ class Graph:
     def add_edge(self, u: Vertex, v: Vertex, weight: int = 1) -> None:
         self.edges.append(Edge(u, v, weight))
     
+    def vertex_degree(self, vertex: Vertex) -> int:
+        degree = 0
+        for edge in self.edges:
+            if edge.is_incident_to_vertex(vertex):
+                degree += 1
+        return degree
+    
+    def print_valence_info(self) -> None:
+        for vertex in self.vertices:
+            print(f"Vertex {vertex.number} has degree {self.vertex_degree(vertex)}")
+    
+    def print_neighboring_edges(self, vertex: Vertex) -> None:
+        print(f"Neighboring edges of vertex {vertex.number}:")
+        for edge in self.edges:
+            if edge.is_incident_to_vertex(vertex):
+                #print(f"  Edge between {edge.u.number} and {edge.v.number} with weight {edge.weight}")
+                print(f"{{{edge.u.number}, {edge.v.number}}}", end=" ")
+        print()
+    
     def print_info(self) -> None:
         print(f"Number of vertices: {len(self.vertices)}")
         print(f"Number of edges: {len(self.edges)}")
