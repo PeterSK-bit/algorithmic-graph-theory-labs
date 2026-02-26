@@ -1,10 +1,10 @@
 from file_loader import load_file
-from parser import Parser
+from digraph.parser import Parser
 
 def main():
-    parser = Parser(load_file("graphs/graph1.txt"))
+    parser = Parser(load_file("graphs/digraph.txt"))
     g = parser.parse_to_graph()
-    g.print_neighboring_edges(g.get_vertex_by_number(2))
+    g.shortest_path_basic_algorithm(5)
 
 if __name__ == "__main__":
     main()
