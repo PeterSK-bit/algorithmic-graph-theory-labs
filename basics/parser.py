@@ -1,4 +1,4 @@
-from graph import Graph
+from .graph import Graph
 
 class Parser:
     def __init__(self, file):

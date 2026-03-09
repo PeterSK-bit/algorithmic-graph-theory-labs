@@ -1,8 +1,9 @@
-from vertex import Vertex
-from edge import Edge
+from .vertex import Vertex
+from .edge import Edge
 
 class Graph:
     def __init__(self, num_vertices: int = -1) -> None:
+        self.num_vertices: int = num_vertices
         self.vertices: list[Vertex] = []
         self.edges: list[Edge] = []
         
@@ -33,6 +34,21 @@ class Graph:
             if edge.is_incident_to_vertex(vertex):
                 degree += 1
         return degree
+    
+    def get_neighbors(self, vertex: Vertex | int) -> list[tuple[Vertex, int]]:
+        if isinstance(vertex, int):
+            if ((temp:=self.get_vertex_by_number(vertex)) is None):
+                print(f"Vertex with number {vertex} not found.")
+                return []
+            vertex = temp
+        
+        neighbors = []
+        for edge in self.edges:
+            if edge.is_incident_to_vertex(vertex):
+                neighbor = edge.u if edge.v == vertex else edge.v
+                if neighbor not in neighbors:
+                    neighbors.append((neighbor, edge.weight))
+        return neighbors
     
     def print_valence_info(self) -> None:
         for vertex in self.vertices:
