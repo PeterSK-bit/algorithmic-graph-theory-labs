@@ -24,6 +24,15 @@ class Digraph:
         print(f"Vertex with number {number} not found.")
         return None
     
+    def get_neighbors(self, vertex: Vertex | int) -> list[tuple[Vertex, int]]:
+        if isinstance(vertex, int):
+            if ((temp:=self.get_vertex_by_number(vertex)) is None):
+                print(f"Vertex with number {vertex} not found.")
+                return []
+            vertex = temp
+        
+        return [(edge.v, edge.weight) for edge in self.edges if edge.u == vertex]
+
     def add_edge(self, u: Vertex, v: Vertex, weight: int = 1) -> None:
         self.edges.append(OrtientedEdge(u, v, weight))
     
