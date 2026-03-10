@@ -1,14 +1,31 @@
+from basics.graph_interface import GraphInterface
 from basics.vertex import Vertex
+
 from digraph.oriented_edge import OrtientedEdge
 
-class Digraph:
+class Digraph(GraphInterface):
     def __init__(self, num_vertices: int = -1) -> None:
+        self._num_vertices: int = num_vertices
         self.vertices: list[Vertex] = []
         self.edges: list[OrtientedEdge] = []
         
         if num_vertices > 0:
             for i in range(1, num_vertices + 1):
                 self.vertices.append(Vertex(i))
+
+    @property
+    def num_vertices(self) -> int:
+        return self._num_vertices
+
+    @num_vertices.setter
+    def num_vertices(self, value: int) -> None:
+        if not isinstance(value, int):
+            print("Number of vertices must be an integer.")
+            return
+        if value < 0:
+            print("Number of vertices cannot be negative.")
+            return
+        self._num_vertices = value
 
     def add_edge_by_numbers(self, u: int, v: int, weight: int = 1) -> None:
         vertex_u = self.get_vertex_by_number(u)

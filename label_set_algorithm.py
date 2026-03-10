@@ -14,22 +14,21 @@ class LabelSetAlgorithm:
         
         root_vertex.ti = 0
         E = [root_vertex,]
-        visited = set()
         heapq.heapify(E)
         while E:
             r = heapq.heappop(E)
-            visited.add(r)
             for v, weight in self.graph.get_neighbors(r):
-                if v not in visited:
-                    if v.ti > r.ti + weight:
-                        v.ti = r.ti + weight
-                        v.xi = r
+                if v.ti > r.ti + weight:
+                    v.ti = r.ti + weight
+                    v.xi = r
                     heapq.heappush(E, v)
 
     def get_shortest_path(self, target: int) -> tuple[int, list[int]]:
         target_vertex: Vertex = self.graph.get_vertex_by_number(target)
         if target_vertex is None:
             raise ValueError(f"Vertex {target} not found in the graph.")
+        if target_vertex.ti == float('inf'):
+            return float('inf'), []
         
         path = []
         current_vertex = target_vertex
