@@ -1,6 +1,6 @@
 from basics.graph_interface import GraphInterface
 
-from .vertex import Vertex
+from ..basics.vertex import Vertex
 from .edge import Edge
 
 class Graph(GraphInterface):

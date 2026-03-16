@@ -1,6 +1,3 @@
-from turtle import distance
-
-from basics import *
 from basics.graph_interface import GraphInterface
 
 class FloydAlgorithm:
