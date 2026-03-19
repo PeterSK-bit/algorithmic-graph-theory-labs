@@ -1,6 +1,7 @@
 from enum import Enum
 
 from basics.graph_interface import GraphInterface
+from basics.edge_interface import EdgeInterface
 
 class SkeletonType(Enum):
     CHEAPEST = 1
@@ -14,13 +15,24 @@ class Skeleton:
 
     def initialize_skeleton(self) -> GraphInterface:
         edges = self.graph.get_edges()
+
+        match self.skeleton_type:
+            case SkeletonType.CHEAPEST:
+                sorted_edges = sorted(edges, key=lambda e: e.weight)
+            case SkeletonType.MOST_EXPENSIVE:
+                sorted_edges = sorted(edges, key=lambda e: e.weight, reverse=True)
+            case _:
+                raise ValueError("Invalid skeleton type")
+            
+        num_of_vertices: int = 0
+        roots: dict[int, list[EdgeInterface]] = {
+            index + 1 : [edge] for index, edge in enumerate(sorted_edges)
+        }
+
+        for k, v in roots.items():
+            print(f"{k}: {[edge.weight for edge in v]}")
         
-        if self.skeleton_type == SkeletonType.CHEAPEST:
-            sorted_edges = sorted(edges, key=lambda e: e.weight)
-        elif self.skeleton_type == SkeletonType.MOST_EXPENSIVE:
-            sorted_edges = sorted(edges, key=lambda e: e.weight, reverse=True)
-        else:
-            raise ValueError("Invalid skeleton type")
+
 
     def get_skeleton(self) -> GraphInterface:
         return self.skeleton

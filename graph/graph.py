@@ -1,6 +1,6 @@
 from basics.graph_interface import GraphInterface
 
-from ..basics.vertex import Vertex
+from basics.vertex import Vertex
 from .edge import Edge
 
 class Graph(GraphInterface):
@@ -43,6 +43,9 @@ class Graph(GraphInterface):
     
     def add_edge(self, u: Vertex, v: Vertex, weight: int = 1) -> None:
         self.edges.append(Edge(u, v, weight))
+
+    def get_edges(self) -> list[Edge]:
+        return self.edges
     
     def vertex_degree(self, vertex: Vertex) -> int:
         degree = 0

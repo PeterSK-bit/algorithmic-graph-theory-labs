@@ -3,9 +3,17 @@ from basics.vertex import Vertex
 
 class OrientedEdge(EdgeInterface):
     def __init__(self, u: Vertex, v: Vertex, weight: int = 1) -> None:
-        self.u = u
-        self.v = v
+        self._u = u
+        self._v = v
         self._weight = weight
+
+    @property
+    def u(self) -> int:
+        return self._u
+    
+    @property
+    def v(self) -> int:
+        return self._v
 
     @property
     def weight(self):
