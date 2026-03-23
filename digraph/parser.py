@@ -1,7 +1,10 @@
+from io import TextIOWrapper
+
 from digraph.digraph import Digraph
+from digraph.oriented_edge import OrientedEdge
 
 class Parser:
-    def __init__(self, file):
+    def __init__(self, file: TextIOWrapper):
         self.file = file
 
     def find_biggest_vertex_number(self) -> int:
@@ -15,10 +18,5 @@ class Parser:
         return biggest_number
 
     def parse_to_graph(self) -> Digraph:
-        graph = Digraph(self.find_biggest_vertex_number())
-
-        for line in self.file.readlines():
-            u, v, weight = map(int, line.split())
-            graph.add_edge_by_numbers(u, v, weight)
-        return graph
+        return Digraph.from_edges([OrientedEdge(*map(int, line.split())) for line in self.file.readlines()])
         

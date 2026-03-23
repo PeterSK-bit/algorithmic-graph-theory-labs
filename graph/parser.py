@@ -1,7 +1,10 @@
+from io import TextIOWrapper
+
+from graph.edge import Edge
 from .graph import Graph
 
 class Parser:
-    def __init__(self, file):
+    def __init__(self, file: TextIOWrapper) -> None:
         self.file = file
 
     def find_biggest_vertex_number(self) -> int:
@@ -15,10 +18,5 @@ class Parser:
         return biggest_number
 
     def parse_to_graph(self) -> Graph:
-        graph = Graph(self.find_biggest_vertex_number())
-
-        for line in self.file.readlines():
-            u, v, weight = map(int, line.split())
-            graph.add_edge_by_numbers(u, v, weight)
-        return graph
+        return Graph.from_edges([Edge(*map(int, line.split())) for line in self.file.readlines()])
         

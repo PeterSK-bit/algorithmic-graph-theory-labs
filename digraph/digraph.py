@@ -1,17 +1,23 @@
 from basics.graph_interface import GraphInterface
 from basics.vertex import Vertex
 
-from digraph.oriented_edge import OrtientedEdge
+from digraph.oriented_edge import OrientedEdge
 
 class Digraph(GraphInterface):
-    def __init__(self, num_vertices: int = -1) -> None:
-        self._num_vertices: int = num_vertices
-        self.vertices: list[Vertex] = []
-        self.edges: list[OrtientedEdge] = []
-        
-        if num_vertices > 0:
-            for i in range(1, num_vertices + 1):
-                self.vertices.append(Vertex(i))
+    def __init__(self, vertices, edges):
+        self.vertices = vertices
+        self.edges = edges
+        self._num_vertices = len(vertices)
+
+    @classmethod
+    def from_edges(cls, edges: list[OrientedEdge]) -> "Digraph":
+        vertices = list({v for edge in edges for v in (edge.u, edge.v)})
+        return cls(vertices, edges)
+
+    @classmethod
+    def from_num_vertices(cls, num_vertices: int) -> "Digraph":
+        vertices = [Vertex(i) for i in range(1, num_vertices + 1)]
+        return cls(vertices, [])
 
     @property
     def num_vertices(self) -> int:

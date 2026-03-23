@@ -4,17 +4,20 @@ from basics.vertex import Vertex
 from .edge import Edge
 
 class Graph(GraphInterface):
-    def __init__(self, num_vertices: int = -1, edges: list[Edge] = None) -> None:
-        self.edges: list[Edge] = edges if edges is not None else []
-        
-        if self.edges:
-            self.vertices = list({v for edge in self.edges for v in (edge.u, edge.v)})
-        elif num_vertices >= 0:
-            self.vertices = [Vertex(i) for i in range(1, num_vertices + 1)]
-        else:
-            raise ValueError("Either num_vertices must be non-negative or edges must be provided.")
-        
-        self._num_vertices = len(self.vertices)
+    def __init__(self, vertices, edges):
+        self.vertices = vertices
+        self.edges = edges
+        self._num_vertices = len(vertices)
+
+    @classmethod
+    def from_edges(cls, edges: list[Edge]) -> "Graph":
+        vertices = list({v for edge in edges for v in (edge.u, edge.v)})
+        return cls(vertices, edges)
+
+    @classmethod
+    def from_num_vertices(cls, num_vertices: int) -> "Graph":
+        vertices = [Vertex(i) for i in range(1, num_vertices + 1)]
+        return cls(vertices, [])
 
     @property
     def num_vertices(self) -> int:
