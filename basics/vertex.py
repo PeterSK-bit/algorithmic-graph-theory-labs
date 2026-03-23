@@ -9,3 +9,6 @@ class Vertex:
 
     def __lt__(self, other):
         return self.ti < other.ti
+    
+    def __str__(self) -> str:
+        return f"Vertex({self.number})"
