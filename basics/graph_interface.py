@@ -4,6 +4,16 @@ from basics.vertex import Vertex
 from basics.edge_interface import EdgeInterface
 
 class GraphInterface(ABC):
+    @classmethod
+    @abstractmethod
+    def from_edges(cls, edges: list) -> "GraphInterface":
+        pass
+
+    @classmethod
+    @abstractmethod
+    def from_num_vertices(cls, num_vertices: int) -> "GraphInterface":
+        pass
+
     @property
     @abstractmethod
     def num_vertices(self) -> int:
@@ -15,4 +25,8 @@ class GraphInterface(ABC):
 
     @abstractmethod
     def get_edges(self) -> tuple[EdgeInterface]:
+        pass
+
+    @abstractmethod
+    def get_vertices(self) -> tuple[Vertex]:
         pass

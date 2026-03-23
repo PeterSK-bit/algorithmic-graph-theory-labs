@@ -4,14 +4,17 @@ from basics.vertex import Vertex
 from .edge import Edge
 
 class Graph(GraphInterface):
-    def __init__(self, num_vertices: int = -1) -> None:
-        self._num_vertices: int = num_vertices
-        self.vertices: list[Vertex] = []
-        self.edges: list[Edge] = []
+    def __init__(self, num_vertices: int = -1, edges: list[Edge] = None) -> None:
+        self.edges: list[Edge] = edges if edges is not None else []
         
-        if num_vertices > 0:
-            for i in range(1, num_vertices + 1):
-                self.vertices.append(Vertex(i))
+        if self.edges:
+            self.vertices = list({v for edge in self.edges for v in (edge.u, edge.v)})
+        elif num_vertices >= 0:
+            self.vertices = [Vertex(i) for i in range(1, num_vertices + 1)]
+        else:
+            raise ValueError("Either num_vertices must be non-negative or edges must be provided.")
+        
+        self._num_vertices = len(self.vertices)
 
     @property
     def num_vertices(self) -> int:
@@ -40,6 +43,9 @@ class Graph(GraphInterface):
                 return vertex
         print(f"Vertex with number {number} not found.")
         return None
+
+    def get_vertices(self):
+        return self.vertices
     
     def add_edge(self, u: Vertex, v: Vertex, weight: int = 1) -> None:
         self.edges.append(Edge(u, v, weight))

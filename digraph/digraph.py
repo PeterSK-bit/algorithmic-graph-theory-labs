@@ -41,6 +41,9 @@ class Digraph(GraphInterface):
         print(f"Vertex with number {number} not found.")
         return None
     
+    def get_vertices(self) -> list[Vertex]:
+        return self.vertices
+    
     def get_neighbors(self, vertex: Vertex | int) -> list[tuple[Vertex, int]]:
         if isinstance(vertex, int):
             if ((temp:=self.get_vertex_by_number(vertex)) is None):
