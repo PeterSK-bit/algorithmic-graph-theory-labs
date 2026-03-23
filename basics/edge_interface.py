@@ -26,3 +26,7 @@ class EdgeInterface(ABC):
     @abstractmethod
     def is_incident_to(self, vertex: Vertex) -> bool:
         pass
+
+    @abstractmethod
+    def __str__(self) -> str:
+        pass

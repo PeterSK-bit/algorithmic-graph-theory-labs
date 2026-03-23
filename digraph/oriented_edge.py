@@ -27,3 +27,6 @@ class OrientedEdge(EdgeInterface):
 
     def is_incoming_to(self, vertex: Vertex) -> bool:
         return vertex == self.v
+    
+    def __str__(self) -> str:
+        return f"{self.u} -> {self.v} (weight: {self.weight})"

@@ -22,3 +22,6 @@ class Edge(EdgeInterface):
     
     def is_incident_to(self, vertex: Vertex) -> bool:
         return self.u == vertex or self.v == vertex
+    
+    def __str__(self) -> str:
+        return f"{self.u} -- {self.v} (weight: {self.weight})"
