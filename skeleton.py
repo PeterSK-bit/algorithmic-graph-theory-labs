@@ -45,6 +45,9 @@ class Skeleton:
                 roots[min(root_u, root_v)] += roots[max(root_u, root_v)]
                 del roots[max(root_u, root_v)]
 
+        if len(edges_in_skeleton) != len(self.graph.get_vertices()) - 1:
+            raise ValueError("The skeleton does not connect all vertices")
+
         return self.graph.from_edges(edges_in_skeleton)
 
     def get_skeleton(self) -> GraphInterface:
