@@ -15,6 +15,14 @@ class FloydAlgorithm:
                 self.dist[u-1][v.number-1] = weight
                 self.next[u-1][v.number-1] = v.number
 
+    @property
+    def distance_matrix(self) -> list[list[float]]:
+        return self.dist
+    
+    @property
+    def next_matrix(self) -> list[list[int | None]]:
+        return self.next
+
     def run(self) -> None:
         for k in range(self.graph.num_vertices):
             for i in range(self.graph.num_vertices):
