@@ -4,15 +4,18 @@ from basics.vertex import Vertex
 from .edge import Edge
 
 class Graph(GraphInterface):
-    def __init__(self, vertices, edges):
+    def __init__(self, vertices: list[Vertex], edges: list[Edge]) -> None:
         self.vertices = vertices
         self.edges = edges
         self._num_vertices = len(vertices)
 
     @classmethod
     def from_edges(cls, edges: list[Edge]) -> "Graph":
-        vertices = list({v for edge in edges for v in (edge.u, edge.v)})
-        return cls(vertices, edges)
+        vertices = set()
+        for edge in edges:
+            vertices.add(edge.u)
+            vertices.add(edge.v)
+        return cls(list(vertices), edges)
 
     @classmethod
     def from_num_vertices(cls, num_vertices: int) -> "Graph":
@@ -65,14 +68,14 @@ class Graph(GraphInterface):
     
     def get_neighbors(self, vertex: Vertex | int) -> list[tuple[Vertex, int]]:
         if isinstance(vertex, int):
-            if ((temp:=self.get_vertex_by_number(vertex)) is None):
-                print(f"Vertex with number {vertex} not found.")
-                return []
+            temp = self.get_vertex_by_number(vertex)
+            if (temp is None):
+                raise ValueError(f"Vertex with number {vertex} not found.")
             vertex = temp
         
         neighbors = []
         for edge in self.edges:
-            if edge.is_incident_to_vertex(vertex):
+            if edge.is_incident_to(vertex):
                 neighbor = edge.u if edge.v == vertex else edge.v
                 if neighbor not in neighbors:
                     neighbors.append((neighbor, edge.weight))
