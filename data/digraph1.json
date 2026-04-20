@@ -1,0 +1,19 @@
+{
+    "version": "1.0",
+    "algorithm": "not specified",
+    "graph_structure_type": "digraph",
+    "edges": [
+        {"u": 1, "v": 2, "weight": 20},
+        {"u": 2, "v": 1, "weight": 20},
+        {"u": 2, "v": 4, "weight": 30},
+        {"u": 3, "v": 2, "weight": 40},
+        {"u": 4, "v": 3, "weight": 70},
+        {"u": 5, "v": 2, "weight": 50},
+        {"u": 5, "v": 4, "weight": 20},
+        {"u": 5, "v": 6, "weight": 10},
+        {"u": 5, "v": 7, "weight": 40},
+        {"u": 6, "v": 5, "weight": 10},
+        {"u": 7, "v": 5, "weight": 40},
+        {"u": 7, "v": 6, "weight": 60}
+    ]
+}

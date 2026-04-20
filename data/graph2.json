@@ -1,0 +1,26 @@
+{
+    "version": "1.0",
+    "algorithm": "not specified",
+    "graph_structure_type": "graph",
+    "edges": [
+        {"u": 1, "v": 2, "weight": 20},
+        {"u": 1, "v": 3, "weight": 40},
+        {"u": 1, "v": 4, "weight": 20},
+        {"u": 1, "v": 5, "weight": 40},
+        {"u": 2, "v": 3, "weight": 50},
+        {"u": 2, "v": 7, "weight": 30},
+        {"u": 2, "v": 9, "weight": 80},
+        {"u": 3, "v": 5, "weight": 30},
+        {"u": 3, "v": 7, "weight": 50},
+        {"u": 3, "v": 10, "weight": 70},
+        {"u": 4, "v": 5, "weight": 30},
+        {"u": 5, "v": 10, "weight": 90},
+        {"u": 6, "v": 7, "weight": 60},
+        {"u": 6, "v": 8, "weight": 60},
+        {"u": 6, "v": 10, "weight": 30},
+        {"u": 6, "v": 11, "weight": 50},
+        {"u": 7, "v": 9, "weight": 20},
+        {"u": 8, "v": 9, "weight": 70},
+        {"u": 10, "v": 11, "weight": 20}
+    ]
+}

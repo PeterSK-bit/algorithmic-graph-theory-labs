@@ -1,0 +1,22 @@
+{
+    "algorithm": "not specified",
+    "version": "1.0",
+    "graph_structure_type": "graph",
+    "edges": [
+        {"u": 1, "v": 2, "weight": 1},
+        {"u": 1, "v": 6, "weight": 1},
+        {"u": 2, "v": 3, "weight": 1},
+        {"u": 2, "v": 6, "weight": 1},
+        {"u": 2, "v": 7, "weight": 1},
+        {"u": 3, "v": 4, "weight": 1},
+        {"u": 3, "v": 7, "weight": 1},
+        {"u": 4, "v": 5, "weight": 1},
+        {"u": 4, "v": 7, "weight": 1},
+        {"u": 5, "v": 8, "weight": 1},
+        {"u": 5, "v": 9, "weight": 1},
+        {"u": 6, "v": 7, "weight": 1},
+        {"u": 6, "v": 10, "weight": 1},
+        {"u": 8, "v": 9, "weight": 1},
+        {"u": 8, "v": 10, "weight": 1}
+    ]
+}
