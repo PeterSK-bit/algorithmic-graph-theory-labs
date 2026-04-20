@@ -1,12 +1,14 @@
 from file_loader import load_file
 from graph.parser import Parser
-from skeleton import Skeleton, SkeletonType
+
+from traveling_salesman import Traveling_salesman
 
 def main():
     parser = Parser(load_file("data/graph2.txt"))
     g = parser.parse_to_graph()
-    skeleton = Skeleton(g, SkeletonType.MOST_EXPENSIVE).get_skeleton()
-    print("; ".join(str(edge) for edge in skeleton.get_edges()))
+    tsm = Traveling_salesman(g)
+    tour = tsm.solve_greedy(1)
+    print("Tour:", tour)
     
 if __name__ == "__main__":
     main()
