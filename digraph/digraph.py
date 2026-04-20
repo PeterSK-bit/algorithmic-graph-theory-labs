@@ -11,8 +11,11 @@ class Digraph(GraphInterface):
 
     @classmethod
     def from_edges(cls, edges: list[OrientedEdge]) -> "Digraph":
-        vertices = list({v for edge in edges for v in (edge.u, edge.v)})
-        return cls(vertices, edges)
+        vertices = set()
+        for edge in edges:
+            vertices.add(edge.u)
+            vertices.add(edge.v)
+        return cls(list(vertices), edges)
 
     @classmethod
     def from_num_vertices(cls, num_vertices: int) -> "Digraph":
