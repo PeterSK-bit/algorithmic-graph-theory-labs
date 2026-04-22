@@ -39,7 +39,7 @@ class GraphLoader:
     @staticmethod
     def _parse_activity_digraph(data: dict) -> ActivityDigraph:
         activities_data = data["activities"]
-        activities = [Activity(a["id"], a["duration"], a.get("depends_on", [])) for a in activities_data]
+        activities = [Activity(a["id"], a["duration"], a.get("successors", [])) for a in activities_data]
         return ActivityDigraph(activities)
 
     @staticmethod
