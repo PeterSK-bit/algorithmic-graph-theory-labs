@@ -1,8 +1,8 @@
 class Activity:
-    def __init__(self, id: int, duration: int, depends_on: list[int]) -> None:
+    def __init__(self, id: int, duration: int, successors: list[int]) -> None:
         self.id = id
         self.duration = duration
-        self.depends_on = depends_on
+        self.successors = successors
 
         es: int = 0  # Earliest Start
         ef: int = 0  # Earliest Finish
