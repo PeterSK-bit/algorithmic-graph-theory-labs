@@ -1,7 +1,5 @@
 from abc import ABC, abstractmethod
 
-from interfaces.vertex import Vertex
-
 class EdgeInterface(ABC):
     @property
     @abstractmethod
@@ -24,7 +22,7 @@ class EdgeInterface(ABC):
         pass
 
     @abstractmethod
-    def is_incident_to(self, vertex: Vertex) -> bool:
+    def is_incident_to(self, vertex: int) -> bool:
         pass
 
     @abstractmethod

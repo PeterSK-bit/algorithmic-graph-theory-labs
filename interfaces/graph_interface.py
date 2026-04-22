@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 
-from interfaces.vertex import Vertex
 from interfaces.edge_interface import EdgeInterface
 
 class GraphInterface(ABC):
@@ -20,7 +19,7 @@ class GraphInterface(ABC):
         pass
 
     @abstractmethod
-    def get_neighbors(self, vertex: int) -> list[tuple[Vertex, int]]:
+    def get_neighbors(self, vertex: int) -> list[tuple[int, int]]:
         pass
 
     @abstractmethod
@@ -28,5 +27,5 @@ class GraphInterface(ABC):
         pass
 
     @abstractmethod
-    def get_vertices(self) -> tuple[Vertex]:
+    def get_vertices(self) -> tuple[int]:
         pass
