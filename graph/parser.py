@@ -1,6 +1,6 @@
 from io import TextIOWrapper
 
-from basics.vertex import Vertex
+from interfaces.vertex import Vertex
 from graph.edge import Edge
 from .graph import Graph
 

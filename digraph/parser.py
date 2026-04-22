@@ -2,7 +2,7 @@ from io import TextIOWrapper
 
 from digraph.digraph import Digraph
 from digraph.oriented_edge import OrientedEdge
-from basics.vertex import Vertex
+from interfaces.vertex import Vertex
 
 class Parser:
     def __init__(self, file: TextIOWrapper):

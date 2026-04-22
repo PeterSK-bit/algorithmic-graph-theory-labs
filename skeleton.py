@@ -1,7 +1,7 @@
 from enum import Enum
 
-from basics.graph_interface import GraphInterface
-from basics.vertex import Vertex
+from interfaces.graph_interface import GraphInterface
+from interfaces.vertex import Vertex
 
 class SkeletonType(Enum):
     CHEAPEST = 1

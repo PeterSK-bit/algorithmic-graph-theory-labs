@@ -1,5 +1,5 @@
-from basics.edge_interface import EdgeInterface
-from basics.vertex import Vertex
+from interfaces.edge_interface import EdgeInterface
+from interfaces.vertex import Vertex
 
 class OrientedEdge(EdgeInterface):
     def __init__(self, u: Vertex, v: Vertex, weight: int = 1) -> None:

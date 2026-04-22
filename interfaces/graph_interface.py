@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
-from basics.vertex import Vertex
-from basics.edge_interface import EdgeInterface
+from interfaces.vertex import Vertex
+from interfaces.edge_interface import EdgeInterface
 
 class GraphInterface(ABC):
     @classmethod

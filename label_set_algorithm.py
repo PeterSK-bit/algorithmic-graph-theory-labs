@@ -1,6 +1,6 @@
 import heapq
 
-from basics.vertex import Vertex
+from interfaces.vertex import Vertex
 from digraph.digraph import Digraph
 
 class LabelSetAlgorithm:

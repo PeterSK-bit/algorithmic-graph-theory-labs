@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from basics.vertex import Vertex
+from interfaces.vertex import Vertex
 
 class EdgeInterface(ABC):
     @property

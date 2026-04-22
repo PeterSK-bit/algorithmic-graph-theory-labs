@@ -1,5 +1,5 @@
-from basics.graph_interface import GraphInterface
-from basics.vertex import Vertex
+from interfaces.graph_interface import GraphInterface
+from interfaces.vertex import Vertex
 
 from digraph.oriented_edge import OrientedEdge
 

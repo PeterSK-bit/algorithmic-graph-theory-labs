@@ -1,4 +1,4 @@
-from basics.graph_interface import GraphInterface
+from interfaces.graph_interface import GraphInterface
 from floyd_algorithm import FloydAlgorithm
 
 
