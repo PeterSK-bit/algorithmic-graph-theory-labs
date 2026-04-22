@@ -1,38 +1,47 @@
 import heapq
+from typing import Optional
 
-from interfaces.vertex import Vertex
 from digraph.digraph import Digraph
+
 
 class LabelSetAlgorithm:
     def __init__(self, graph: Digraph) -> None:
         self.graph = graph
 
     def run(self, root: int) -> None:
-        root_vertex: Vertex = self.graph.get_vertex_by_number(root)
-        if root_vertex is None:
+        if not self.graph.contains_vertex(root):
             raise ValueError(f"Vertex {root} not found in the graph.")
-        
-        root_vertex.ti = 0
-        E = [root_vertex,]
-        heapq.heapify(E)
-        while E:
-            r = heapq.heappop(E)
-            for v, weight in self.graph.get_neighbors(r):
-                if v.ti > r.ti + weight:
-                    v.ti = r.ti + weight
-                    v.xi = r
-                    heapq.heappush(E, v)
 
-    def get_shortest_path(self, target: int) -> tuple[int, list[int]]:
-        target_vertex: Vertex = self.graph.get_vertex_by_number(target)
-        if target_vertex is None:
+        self.ti: dict[int, float] = {v: float('inf') for v in self.graph.vertices()}
+        self.xi: dict[int, Optional[int]] = {v: None for v in self.graph.vertices()}
+
+        self.ti[root] = 0.0
+        E = [(0.0, root)]
+
+        while E:
+            r_dist, r = heapq.heappop(E)
+
+            if r_dist > self.ti[r]:
+                continue
+
+            for v, weight in self.graph.get_neighbors(r):
+                new_dist = self.ti[r] + weight
+                if self.ti[v] > new_dist:
+                    self.ti[v] = new_dist
+                    self.xi[v] = r
+                    heapq.heappush(E, (self.ti[v], v))
+
+    def get_shortest_path(self, target: int) -> tuple[float, list[int]]:
+        if not self.graph.contains_vertex(target):
             raise ValueError(f"Vertex {target} not found in the graph.")
-        if target_vertex.ti == float('inf'):
+        if not hasattr(self, 'ti') or target not in self.ti:
+            raise RuntimeError("Run the algorithm before querying paths.")
+        if self.ti[target] == float('inf'):
             return float('inf'), []
-        
+
         path = []
-        current_vertex = target_vertex
-        while current_vertex is not None:
-            path.append(current_vertex.number)
-            current_vertex = current_vertex.xi
-        return target_vertex.ti, path[::-1]
+        current = target
+        while current is not None:
+            path.append(current)
+            current = self.xi[current]
+        return self.ti[target], path[::-1]
