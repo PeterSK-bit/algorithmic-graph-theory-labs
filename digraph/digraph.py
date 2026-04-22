@@ -1,10 +1,9 @@
 from interfaces.graph_interface import GraphInterface
-from interfaces.vertex import Vertex
 
 from digraph.oriented_edge import OrientedEdge
 
 class Digraph(GraphInterface):
-    def __init__(self, vertices, edges):
+    def __init__(self, vertices: list[int], edges: list[OrientedEdge]) -> None:
         self.vertices = vertices
         self.edges = edges
         self._num_vertices = len(vertices)
@@ -19,8 +18,7 @@ class Digraph(GraphInterface):
 
     @classmethod
     def from_num_vertices(cls, num_vertices: int) -> "Digraph":
-        vertices = [Vertex(i) for i in range(1, num_vertices + 1)]
-        return cls(vertices, [])
+        return cls([i for i in range(1, num_vertices + 1)], [])
 
     @property
     def num_vertices(self) -> int:
@@ -36,36 +34,23 @@ class Digraph(GraphInterface):
             return
         self._num_vertices = value
 
-    def add_edge_by_numbers(self, u: int, v: int, weight: int = 1) -> None:
-        vertex_u = self.get_vertex_by_number(u)
-        vertex_v = self.get_vertex_by_number(v)
-
-        if vertex_u and vertex_v:
-            self.add_edge(vertex_u, vertex_v, weight)
+    def add_edge(self, u: int, v: int, weight: int = 1) -> None:
+        if self.contains_vertex(u) and self.contains_vertex(v):
+            self.add_edge(u, v, weight)
     
-    def get_vertex_by_number(self, number: int) -> Vertex | None:
-        for vertex in self.vertices:
-            if vertex.number == number:
-                return vertex
-        print(f"Vertex with number {number} not found.")
-        return None
+    def contains_vertex(self, number: int) -> bool:
+        return any(vertex == number for vertex in self.vertices)
     
-    def get_vertices(self) -> list[Vertex]:
+    def get_vertices(self) -> list[int]:
         return self.vertices
     
-    def get_neighbors(self, vertex: Vertex | int) -> list[tuple[Vertex, int]]:
-        if isinstance(vertex, int):
-            if ((temp:=self.get_vertex_by_number(vertex)) is None):
-                print(f"Vertex with number {vertex} not found.")
-                return []
-            vertex = temp
-        
+    def get_neighbors(self, vertex: int) -> list[tuple[int, int]]:
+        """
+        Returns a list of tuples (neighbor_vertex_number, edge_weight) for all neighbors of the given vertex.
+        """
         return [(edge.v, edge.weight) for edge in self.edges if edge.u == vertex]
-
-    def add_edge(self, u: Vertex, v: Vertex, weight: int = 1) -> None:
-        self.edges.append(OrtientedEdge(u, v, weight))
     
-    def vertex_degree(self, vertex: Vertex) -> int:
+    def vertex_degree(self, vertex: int) -> int:
         degree = 0
         for edge in self.edges:
             if edge.is_incident_to_vertex(vertex):
@@ -76,19 +61,21 @@ class Digraph(GraphInterface):
         for vertex in self.vertices:
             print(f"Vertex {vertex.number} has degree {self.vertex_degree(vertex)}")
     
-    def print_neighboring_edges(self, vertex: Vertex) -> None:
-        print(f"Neighboring edges of vertex {vertex.number}:")
+    def print_neighboring_edges(self, vertex: int) -> None:
+        print(f"Neighboring edges of vertex {vertex}:")
         for edge in self.edges:
             if edge.is_incident_to_vertex(vertex):
                 #print(f"  Edge between {edge.u.number} and {edge.v.number} with weight {edge.weight}")
-                print(f"({edge.u.number}, {edge.v.number})", end=" ")
+                print(f"({edge.u}, {edge.v})", end=" ")
         print()
     
     def print_info(self) -> None:
         print(f"Number of vertices: {len(self.vertices)}")
         print(f"Number of edges: {len(self.edges)}")
 
-    
+    """
+    TODO: Move to separate class for algorithms
+
     def shortest_path_basic_algorithm(self, vertex: int) -> None:
         base = self.get_vertex_by_number(vertex)
 
@@ -133,3 +120,4 @@ class Digraph(GraphInterface):
         path.reverse()
 
         print(f"Shortest path from vertex {start} to vertex {end}: {' -> '.join(map(str, path))} with total weight {target.ti}")
+        """

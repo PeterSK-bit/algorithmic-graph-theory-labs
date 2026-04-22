@@ -1,10 +1,9 @@
 from interfaces.graph_interface import GraphInterface
 
-from interfaces.vertex import Vertex
 from .edge import Edge
 
 class Graph(GraphInterface):
-    def __init__(self, vertices: list[Vertex], edges: list[Edge]) -> None:
+    def __init__(self, vertices: list[int], edges: list[Edge]) -> None:
         self.vertices = vertices
         self.edges = edges
         self._num_vertices = len(vertices)
@@ -19,8 +18,7 @@ class Graph(GraphInterface):
 
     @classmethod
     def from_num_vertices(cls, num_vertices: int) -> "Graph":
-        vertices = [Vertex(i) for i in range(1, num_vertices + 1)]
-        return cls(vertices, [])
+        return cls([i for i in range(1, num_vertices + 1)], [])
 
     @property
     def num_vertices(self) -> int:
@@ -37,62 +35,25 @@ class Graph(GraphInterface):
         self._num_vertices = value
 
     def add_edge_by_numbers(self, u: int, v: int, weight: int = 1) -> None:
-        vertex_u = self.get_vertex_by_number(u)
-        vertex_v = self.get_vertex_by_number(v)
+        if self.contains_vertex(u) and self.contains_vertex(v):
+            self.add_edge(u, v, weight)
 
-        if vertex_u and vertex_v:
-            self.add_edge(vertex_u, vertex_v, weight)
-    
-    def get_vertex_by_number(self, number: int) -> Vertex | None:
-        for vertex in self.vertices:
-            if vertex.number == number:
-                return vertex
-        print(f"Vertex with number {number} not found.")
-        return None
+    def contains_vertex(self, number: int) -> bool:
+        return any(vertex == number for vertex in self.vertices)
 
     def get_vertices(self):
         return self.vertices
-    
-    def add_edge(self, u: Vertex, v: Vertex, weight: int = 1) -> None:
-        self.edges.append(Edge(u, v, weight))
 
     def get_edges(self) -> list[Edge]:
         return self.edges
     
-    def vertex_degree(self, vertex: Vertex) -> int:
-        degree = 0
-        for edge in self.edges:
-            if edge.is_incident_to_vertex(vertex):
-                degree += 1
-        return degree
-    
-    def get_neighbors(self, vertex: Vertex | int) -> list[tuple[Vertex, int]]:
-        if isinstance(vertex, int):
-            temp = self.get_vertex_by_number(vertex)
-            if (temp is None):
-                raise ValueError(f"Vertex with number {vertex} not found.")
-            vertex = temp
-        
-        neighbors = []
+    def get_neighbors(self, vertex: int | int) -> list[tuple[int, int]]:
+        """"
+        Returns a list of tuples (neighbor_vertex_number, edge_weight) for all neighbors of the given vertex.
+        """
+        neighbors = set()
         for edge in self.edges:
             if edge.is_incident_to(vertex):
                 neighbor = edge.u if edge.v == vertex else edge.v
-                if neighbor not in neighbors:
-                    neighbors.append((neighbor, edge.weight))
-        return neighbors
-    
-    def print_valence_info(self) -> None:
-        for vertex in self.vertices:
-            print(f"Vertex {vertex.number} has degree {self.vertex_degree(vertex)}")
-    
-    def print_neighboring_edges(self, vertex: Vertex) -> None:
-        print(f"Neighboring edges of vertex {vertex.number}:")
-        for edge in self.edges:
-            if edge.is_incident_to_vertex(vertex):
-                #print(f"  Edge between {edge.u.number} and {edge.v.number} with weight {edge.weight}")
-                print(f"{{{edge.u.number}, {edge.v.number}}}", end=" ")
-        print()
-    
-    def print_info(self) -> None:
-        print(f"Number of vertices: {len(self.vertices)}")
-        print(f"Number of edges: {len(self.edges)}")
+                neighbors.add((neighbor, edge.weight))
+        return list(neighbors)

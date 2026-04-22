@@ -1,9 +1,7 @@
 from interfaces.edge_interface import EdgeInterface
 
-from interfaces.vertex import Vertex
-
 class Edge(EdgeInterface):
-    def __init__(self, u: Vertex, v: Vertex, weight: int = 1) -> None:
+    def __init__(self, u: int, v: int, weight: int = 1) -> None:
         self._u = u
         self._v = v
         self._weight = weight
@@ -20,8 +18,8 @@ class Edge(EdgeInterface):
     def weight(self):
         return self._weight
     
-    def is_incident_to(self, vertex: Vertex) -> bool:
+    def is_incident_to(self, vertex: int) -> bool:
         return self.u == vertex or self.v == vertex
     
     def __str__(self) -> str:
-        return f"{self.u} -- {self.v} (weight: {self.weight})"
+        return f"{self.u} --{self.weight}-- {self.v}"
