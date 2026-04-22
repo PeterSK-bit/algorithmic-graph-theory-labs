@@ -1,13 +1,11 @@
-from file_loader import load_file
-from digraph.parser import Parser
+from data_loader.graph_loader import GraphLoader
 
 from time_planning import TimePlanning
 
 def main():
-    parser = Parser(load_file("data/graph2.txt"))
-    g = parser.parse_to_graph()
-    activities = parser.parse_to_activities() #TODO implement this method
-    tp = TimePlanning(g, activities)
+    activity_digraph = GraphLoader.load("data/activity_digraph.json")
+    tp = TimePlanning(activity_digraph)
+    print(tp)
 
 if __name__ == "__main__":
     main()
