@@ -34,9 +34,9 @@ class Graph(GraphInterface):
             return
         self._num_vertices = value
 
-    def add_edge_by_numbers(self, u: int, v: int, weight: int = 1) -> None:
+    def add_edge(self, u: int, v: int, weight: int = 1) -> None:
         if self.contains_vertex(u) and self.contains_vertex(v):
-            self.add_edge(u, v, weight)
+            self.edges.append(Edge(u, v, weight))
 
     def contains_vertex(self, number: int) -> bool:
         return any(vertex == number for vertex in self.vertices)
