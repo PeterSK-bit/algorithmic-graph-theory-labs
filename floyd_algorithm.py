@@ -12,8 +12,8 @@ class FloydAlgorithm:
 
         for u in range(1, graph.num_vertices + 1):
             for v, weight in graph.get_neighbors(u):
-                self.dist[u-1][v.number-1] = weight
-                self.next[u-1][v.number-1] = v.number
+                self.dist[u-1][v-1] = weight
+                self.next[u-1][v-1] = v
 
     @property
     def distance_matrix(self) -> list[list[float]]:
