@@ -1,6 +1,6 @@
 from typing import Optional
 
-from digraph.activity_digraph import ActivityDigraph, Activity
+from digraph.activity_digraph import ActivityDigraph
 
 
 class TimePlanning:

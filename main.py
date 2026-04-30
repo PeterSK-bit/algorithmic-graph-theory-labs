@@ -1,11 +1,12 @@
 from data_loader.graph_loader import GraphLoader
 
-from time_planning import TimePlanning
+from eulerian_trail import EulerianTrail
 
 def main():
-    activity_digraph = GraphLoader.load("data/activity_digraph.json")
-    tp = TimePlanning(activity_digraph)
-    print(tp)
+    graph = GraphLoader.load("data/graph3.json")
+    et = EulerianTrail(graph)
+    et.labyrinth_solve(1)
+    print(et)
 
 if __name__ == "__main__":
     main()
