@@ -106,7 +106,7 @@ class EulerianTrail:
             adj[e.u].append(e)
             adj[e.v].append(e)
 
-        def can_traverse(edge, frm) -> int | False:
+        def can_traverse(edge, frm):
             """Can we go from frm to the other endpoint?"""
             s = st(edge)
             if frm == edge.u:

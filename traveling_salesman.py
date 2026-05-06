@@ -2,7 +2,7 @@ from interfaces.graph_interface import GraphInterface
 from floyd_algorithm import FloydAlgorithm
 
 
-class Traveling_salesman:
+class TravelingSalesman:
     def __init__(self, graph: GraphInterface):
         self._graph = graph
 
