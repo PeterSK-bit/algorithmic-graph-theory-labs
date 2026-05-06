@@ -8,15 +8,7 @@ class FlowDigraph(Digraph):
     """
 
     def __init__(self, vertices: list[int], edges: list[FlowEdge]) -> None:
-        residual_edges: list[FlowEdge] = []
-        for e in edges:
-            rev = FlowEdge(e.v, e.u, weight=e.weight, capacity=0)
-            e.rev = rev
-            rev.rev = e
-            residual_edges.append(rev)
-
-        all_edges = edges + residual_edges
-        super().__init__(vertices, all_edges)
+        super().__init__(vertices, edges)
 
         self.forward_edges = edges
     
