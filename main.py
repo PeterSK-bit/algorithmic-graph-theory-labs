@@ -1,13 +1,12 @@
 from data_loader.graph_loader import GraphLoader
 
-from eulerian_trail import EulerianTrail
-from graph import graph
-from traveling_salesman import TravelingSalesman
+from network_flow import NetworkFlow
 
 def main():
-    graph = GraphLoader.load("data/graph2.json")
-    ts = TravelingSalesman(graph)
-    print(ts.solve_cheapest_insertion(1))
+    graph = GraphLoader.load("data/flow_digraph.json")
+    nf = NetworkFlow(graph)
+    for edge in graph.get_edges():
+        print(f"{edge.u} | {edge.v} | {edge.capacity=} | {edge.weight=}")
 
 
 if __name__ == "__main__":
