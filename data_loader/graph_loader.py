@@ -1,5 +1,7 @@
 import json
 from pathlib import Path
+from digraph.flow_edge import FlowEdge
+from digraph.flow_digraph import FlowDigraph
 from graph.graph import Graph, Edge
 from digraph.digraph import Digraph, OrientedEdge
 from digraph.activity_digraph import ActivityDigraph, Activity
@@ -19,6 +21,8 @@ class GraphLoader:
                     return GraphLoader._parse_digraph(data)
             case "activity_digraph":
                 return GraphLoader._parse_activity_digraph(data)
+            case "flow_digraph":
+                return GraphLoader._parse_flow_digraph(data)
             case _:
                 raise ValueError(f"Unknown graph_structure_type: {gtype!r}")
 
@@ -50,3 +54,13 @@ class GraphLoader:
             verts.add(e["u"])
             verts.add(e["v"])
         return sorted(verts)
+    
+    @staticmethod
+    def _parse_flow_digraph(data: dict) -> FlowDigraph:
+        edges_data = data["edges"]
+        edges = [
+            FlowEdge(e["u"], e["v"], e.get("weight", 1), e.get("capacity", 0))
+            for e in edges_data
+        ]
+        vertices = GraphLoader._extract_vertices(edges_data)
+        return FlowDigraph(vertices, edges)
