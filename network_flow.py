@@ -1,5 +1,4 @@
 from digraph.flow_digraph import FlowDigraph
-
 from digraph.flow_edge import FlowEdge
 
 from collections import deque

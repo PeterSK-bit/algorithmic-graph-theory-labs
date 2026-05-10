@@ -2,7 +2,6 @@ from typing import Optional
 
 from digraph.activity_digraph import ActivityDigraph
 
-
 class TimePlanning:
     def __init__(self, activity_digraph: "ActivityDigraph"):
         self.digraph = activity_digraph
