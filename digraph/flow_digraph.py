@@ -9,8 +9,7 @@ class FlowDigraph(Digraph):
 
     def __init__(self, vertices: list[int], edges: list[FlowEdge]) -> None:
         super().__init__(vertices, edges)
-
-        self.forward_edges = edges
+        self.edges = edges
     
     def get_edges(self) -> tuple[FlowEdge]:
-        return tuple(self.forward_edges)
+        return tuple(self.edges)

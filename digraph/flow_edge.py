@@ -6,7 +6,6 @@ class FlowEdge(OrientedEdge):
         super().__init__(u, v, weight)
         self.capacity = capacity
         self.flow = 0
-        self.rev: FlowEdge | None = None
 
     @property
     def residual(self) -> int:

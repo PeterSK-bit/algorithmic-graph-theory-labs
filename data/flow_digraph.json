@@ -4,7 +4,7 @@
     "graph_structure_type": "flow_digraph",
     "edges": [
         {"u": 1, "v": 2, "weight": 5, "capacity": 4},
-        {"u": 1, "v": 3, "weight": 8, "capacity": 7},
+        {"u": 1, "v": 3, "weight": 8, "capacity": 5},
         {"u": 2, "v": 4, "weight": 9, "capacity": 5},
         {"u": 2, "v": 5, "weight": 3, "capacity": 4},
         {"u": 3, "v": 4, "weight": 2, "capacity": 8},
