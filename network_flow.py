@@ -80,5 +80,89 @@ class NetworkFlow:
 
         return max_flow
 
-    def solve_cheapest_flow(self, source, sink):
-        pass
+    def solve_cheapest_flow(self, source: int, sink: int) -> tuple[int, int]:
+        """
+        Cheapest maximum flow.
+        Phase 1: max flow (Ford-Fulkerson).
+        Phase 2: cancel negative-cost cycles in residual graph.
+        Returns (max_flow_value, minimum_total_cost).
+        """
+        # krok 1
+        max_flow = self.solve_ford_fulkerson(source, sink)
+
+        vertices = self.graph.get_vertices()
+
+        # krok 2
+        while True:
+            dist = {v: 0 for v in vertices}
+            parent = {v: None for v in vertices}   # parent[v] = (prev_vertex, edge, is_forward)
+
+            improved_node = None
+
+            # detect negative cycle using Bellman-Ford
+            for _ in range(len(vertices)):
+                improved_node = None
+                for u in vertices:
+                    for edge in self.incident_edges[u]:
+                        if edge.u == u:
+                            if edge.residual > 0:
+                                v = edge.v
+                                nd = dist[u] + edge.weight
+                                if nd < dist[v]:
+                                    dist[v] = nd
+                                    parent[v] = (u, edge, True)
+                                    improved_node = v
+                        else:
+                            if edge.flow > 0:
+                                v = edge.u
+                                nd = dist[u] - edge.weight   # negative cost for undoing
+                                if nd < dist[v]:
+                                    dist[v] = nd
+                                    parent[v] = (u, edge, False)
+                                    improved_node = v
+
+                if improved_node is None:
+                    break
+
+            # krok 3
+            if improved_node is None:
+                break
+
+            # krok 4
+            # Trace back |V| times to guarantee we are on the cycle
+            cycle_node = improved_node
+            for _ in range(len(vertices)):
+                cycle_node = parent[cycle_node][0]
+
+            # Extract the cycle edges
+            cycle: list[tuple[FlowEdge, bool]] = []
+            v = cycle_node
+            while True:
+                u, edge, is_forward = parent[v]
+                cycle.append((edge, is_forward))
+                v = u
+                if v == cycle_node:
+                    break
+
+            # Find reserve (bottleneck) of the cycle
+            bottleneck = float('inf')
+            for edge, is_forward in cycle:
+                if is_forward:
+                    reserve = edge.capacity - edge.flow
+                else:
+                    reserve = edge.flow
+                bottleneck = min(bottleneck, reserve)
+
+            # Augment flow around the cycle
+            for edge, is_forward in cycle:
+                if is_forward:
+                    edge.flow += bottleneck
+                else:
+                    edge.flow -= bottleneck
+
+
+        total_cost = 0
+        for edge in self.graph.get_edges():
+            total_cost += edge.flow * edge.weight
+
+        return max_flow, total_cost
