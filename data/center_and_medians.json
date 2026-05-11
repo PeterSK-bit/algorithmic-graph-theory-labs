@@ -1,0 +1,29 @@
+{
+    "algorithm": "center and medians",
+    "version": "1.0",
+    "graph_structure_type": "graph",
+    "edges": [
+        {"u": 1, "v": 2, "weight": 30},
+        {"u": 1, "v": 3, "weight": 30},
+        {"u": 1, "v": 4, "weight": 40},
+        {"u": 2, "v": 5, "weight": 30},
+        {"u": 2, "v": 6, "weight": 50},
+        {"u": 3, "v": 7, "weight": 20},
+        {"u": 4, "v": 5, "weight": 20},
+        {"u": 4, "v": 7, "weight": 40},
+        {"u": 5, "v": 6, "weight": 40},
+        {"u": 5, "v": 8, "weight": 40},
+        {"u": 6, "v": 8, "weight": 40},
+        {"u": 7, "v": 8, "weight": 40}
+    ],
+    "vertices": [
+        {"id": 1, "weight": 1},
+        {"id": 2, "weight": 1},
+        {"id": 3, "weight": 1},
+        {"id": 4, "weight": 1},
+        {"id": 5, "weight": 1},
+        {"id": 6, "weight": 1},
+        {"id": 7, "weight": 1},
+        {"id": 8, "weight": 1}
+    ]
+}
