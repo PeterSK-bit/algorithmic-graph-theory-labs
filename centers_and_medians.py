@@ -10,7 +10,7 @@ class CentersAndMedians:
         self.floyd: FloydAlgorithm = FloydAlgorithm(graph)
         self.floyd.run()
 
-    def _assign(self, centers: Set[int]) -> tuple[float, float]:
+    def _assign(self, centers: Set[int], non_centers: Set[int]) -> tuple[float, float]:
         """
         For every vertex, find distance to its nearest center.
         Returns (max_distance, total_distance) over ALL vertices.
@@ -18,10 +18,9 @@ class CentersAndMedians:
 
         max_d = 0.0
         total_d = 0.0
-        n = self.graph.num_vertices
 
-        for v in range(n):
-            min_d = min(self.floyd.dist[v][c] for c in centers)
+        for v in non_centers:
+            min_d = min(self.floyd.dist[v-1][c-1] for c in centers)
             max_d = max(max_d, min_d)
             total_d += min_d
 
@@ -35,9 +34,9 @@ class CentersAndMedians:
         """
         n = self.graph.num_vertices
         centers = set(initial_centers)
-        non_centers = set(range(n)) - centers
+        non_centers = set(range(1, n + 1)) - centers
 
-        current_max, current_total = self._assign(centers)
+        current_max, current_total = self._assign(centers, non_centers)
         current_obj = current_max if minimize_max else current_total
 
         improved = True
@@ -52,7 +51,11 @@ class CentersAndMedians:
                     new_centers.remove(c)
                     new_centers.add(v)
 
-                    new_max, new_total = self._assign(new_centers)
+                    new_non_centers = set(non_centers)
+                    new_non_centers.remove(v)
+                    new_non_centers.add(c)
+
+                    new_max, new_total = self._assign(new_centers, new_non_centers)
                     new_obj = new_max if minimize_max else new_total
 
                     if new_obj < best_obj:
@@ -74,7 +77,7 @@ class CentersAndMedians:
         if not (1 <= p <= self.graph.num_vertices):
             raise ValueError("p must be between 1 and num_vertices")
 
-        initial = set(range(p))
+        initial = set(range(1, p + 1))
         centers, obj = self._interchange(initial, minimize_max=False)
         return centers, obj
 
@@ -82,6 +85,6 @@ class CentersAndMedians:
         if not (1 <= p <= self.graph.num_vertices):
             raise ValueError("p must be between 1 and num_vertices")
 
-        initial = set(range(p))
+        initial = set(range(1, p + 1))
         centers, obj = self._interchange(initial, minimize_max=True)
         return centers, obj
